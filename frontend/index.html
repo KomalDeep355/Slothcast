@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Slothcast helps you understand procrastination barriers, make tiny starts, and discover which strategies help you follow through."
+  />
+  <meta name="theme-color" content="#f8f5ed" />
+  <title>Slothcast — Less guilt. More getting started.</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#home" aria-label="Slothcast home">
+      <span class="brand-icon" aria-hidden="true">◡̈</span>
+      <span>slothcast<span class="brand-dot">.</span></span>
+    </a>
+
+    <div class="sidebar-label">YOUR LITTLE CORNER</div>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="#home">
+        <span aria-hidden="true">⌂</span> Home
+      </a>
+      <a class="nav-link" href="#checkin">
+        <span aria-hidden="true">♡</span> Check in
+      </a>
+      <a class="nav-link" href="#planner">
+        <span aria-hidden="true">✎</span> Tiny steps
+      </a>
+      <a class="nav-link" href="#deadline">
+        <span aria-hidden="true">◷</span> Deadline radar
+      </a>
+      <a class="nav-link" href="#journal">
+        <span aria-hidden="true">✿</span> My patterns
+      </a>
+      <a class="nav-link" href="#science">
+        <span aria-hidden="true">⌕</span> The science
+      </a>
+    </nav>
+
+    <div class="sidebar-note">
+      <span class="note-sticker">A LITTLE REMINDER</span>
+      <p>You don't have to feel ready to begin.</p>
+      <span class="note-sparkle" aria-hidden="true">✳</span>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="mini-sloth" aria-hidden="true">🦥</div>
+      <p>Slow is a speed, too.</p>
+      <span>Made for imperfect humans.</span>
+    </div>
+  </aside>
+
+  <main class="main-content" id="home">
+    <header class="topbar">
+      <button
+        class="mobile-menu icon-button"
+        id="mobileMenu"
+        type="button"
+        aria-label="Toggle navigation"
+        aria-expanded="false"
+      >☰</button>
+
+      <div class="breadcrumb">YOUR PERSONAL STARTING STUDIO <span>✳</span></div>
+
+      <div class="topbar-right">
+        <span class="today-label" id="today">YOUR DAY, YOUR PACE</span>
+        <button class="avatar-button" id="topHelp" type="button" aria-label="Open Slothcast helper">?</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="live-dot"></span> YOUR NO-GUILT PRODUCTIVITY SPACE</span>
+
+        <h1>Less guilt.<br />More <span class="highlight-word">getting started.</span></h1>
+
+        <p class="hero-description">
+          Your brain knows the deadline. So why is starting so hard?
+          Let's figure out what's getting in the way and find one tiny move
+          that feels doable.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#checkin">
+            Help me start <span aria-hidden="true">↗</span>
+          </a>
+          <a class="text-link" href="#science">The science behind it ↓</a>
+        </div>
+
+        <div class="hero-footnote">
+          <span aria-hidden="true">✳</span>
+          No guilt trips. No perfection required. Just progress.
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Illustration of a relaxed sloth">
+        <div class="art-sun"></div>
+        <div class="art-spark spark-one">✳</div>
+        <div class="art-spark spark-two">✦</div>
+        <div class="art-label label-top">TAKE IT EASY</div>
+
+        <div class="sloth-card">
+          <div class="sloth-plant plant-left">❧</div>
+          <div class="sloth-face">
+            <span class="sloth-ear ear-left"></span>
+            <span class="sloth-ear ear-right"></span>
+            <span class="sloth-eye eye-left"></span>
+            <span class="sloth-eye eye-right"></span>
+            <span class="sloth-nose"></span>
+            <span class="sloth-smile"></span>
+          </div>
+          <div class="sloth-body"></div>
+          <div class="sloth-arm arm-left"></div>
+          <div class="sloth-arm arm-right"></div>
+          <div class="sloth-feet">⌁ &nbsp; ⌁</div>
+        </div>
+
+        <div class="art-caption">
+          <span>certified tiny-step enthusiast</span>
+          <span>♡</span>
+        </div>
+        <div class="art-label label-bottom">PROGRESS, NOT PRESSURE</div>
+      </div>
+    </section>
+
+    <div class="principle-strip">
+      <div><span>01</span> Understand the block</div>
+      <span class="strip-divider">✳</span>
+      <div><span>02</span> Choose a tiny move</div>
+      <span class="strip-divider">✳</span>
+      <div><span>03</span> Learn what helps</div>
+    </div>
+
+    <section class="section checkin-section" id="checkin">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">FIRST, A LITTLE CHECK-IN</span>
+          <h2>What's making it hard <em>today?</em></h2>
+          <p class="section-description">
+            No need to overthink it. Pick what feels closest to your experience.
+          </p>
+        </div>
+        <span class="handwritten">be honest, not harsh ♡</span>
+      </div>
+
+      <div class="barrier-grid" id="barrierGrid" role="group" aria-label="Choose what makes your task difficult">
+        <button class="barrier-card" type="button" data-barrier="overwhelmed" aria-pressed="false">
+          <span class="barrier-emoji">🫠</span>
+          <span class="barrier-title">It's overwhelming</span>
+          <span class="barrier-subtitle">Too much to do, no clue where to begin.</span>
+        </button>
+
+        <button class="barrier-card" type="button" data-barrier="uncertain" aria-pressed="false">
+          <span class="barrier-emoji">🧩</span>
+          <span class="barrier-title">I'm stuck on step one</span>
+          <span class="barrier-subtitle">I don't know what the first move is.</span>
+        </button>
+
+        <button class="barrier-card" type="button" data-barrier="perfectionism" aria-pressed="false">
+          <span class="barrier-emoji">🫣</span>
+          <span class="barrier-title">I'm scared to get it wrong</span>
+          <span class="barrier-subtitle">I want it to be good from the start.</span>
+        </button>
+
+        <button class="barrier-card" type="button" data-barrier="boring" aria-pressed="false">
+          <span class="barrier-emoji">🥱</span>
+          <span class="barrier-title">It's boring</span>
+          <span class="barrier-subtitle">My brain would rather do anything else.</span>
+        </button>
+
+        <button class="barrier-card" type="button" data-barrier="distracted" aria-pressed="false">
+          <span class="barrier-emoji">📱</span>
+          <span class="barrier-title">I'm distracted</span>
+          <span class="barrier-subtitle">I keep wandering away from the task.</span>
+        </button>
+
+        <button class="barrier-card" type="button" data-barrier="low_energy" aria-pressed="false">
+          <span class="barrier-emoji">🔋</span>
+          <span class="barrier-title">I'm low on energy</span>
+          <span class="barrier-subtitle">Even small things feel like a lot.</span>
+        </button>
+      </div>
+
+      <p class="inline-note">
+        These are self-reported barriers, not diagnoses. You can change your answer whenever you like.
+      </p>
+    </section>
+
+    <section class="section planner-section" id="planner">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">YOUR TINY-STEP LAB</span>
+          <h2>Let's make it <em>smaller.</em></h2>
+          <p class="section-description">
+            Tell us what you're avoiding. We'll turn it into one approachable next action.
+          </p>
+        </div>
+        <div class="sticker">SMALL COUNTS!</div>
+      </div>
+
+      <div class="planner-grid">
+        <form class="task-form paper-card" id="taskForm">
+          <label for="taskInput">What are you trying to get done?</label>
+          <textarea
+            id="taskInput"
+            name="task"
+            rows="3"
+            maxlength="500"
+            placeholder="e.g. Finish my machine learning assignment..."
+            required
+          ></textarea>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="taskDeadline">When is it due?</label>
+              <input type="date" id="taskDeadline" name="deadline" />
+            </div>
+            <div class="form-field">
+              <label for="taskMinutes">Time you have right now</label>
+              <select id="taskMinutes" name="minutes">
+                <option value="2">2 minutes</option>
+                <option value="5" selected>5 minutes</option>
+                <option value="10">10 minutes</option>
+                <option value="15">15 minutes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="forecastMinutes">Estimated total task time</label>
+            <select id="forecastMinutes">
+              <option value="10">10 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="60" selected>About an hour</option>
+              <option value="120">About 2 hours</option>
+              <option value="240">About 4 hours</option>
+              <option value="480">About 8 hours</option>
+            </select>
+          </div>
+
+          <div class="form-field energy-field">
+            <div class="energy-label">
+              <label for="energy">Today's energy</label>
+              <span id="energyText">A little low-key</span>
+            </div>
+            <input id="energy" name="energy" type="range" min="1" max="5" value="3" />
+            <div class="range-labels"><span>running on fumes</span><span>full battery</span></div>
+          </div>
+
+          <div class="form-field">
+            <label for="ifCue">When could you start? <span class="optional">(optional)</span></label>
+            <input
+              id="ifCue"
+              name="cue"
+              type="text"
+              maxlength="160"
+              placeholder="e.g. After I finish my tea"
+            />
+          </div>
+
+          <button class="button button-primary button-full" type="submit">
+            Find my tiny move <span aria-hidden="true">↗</span>
+          </button>
+          <div class="api-actions">
+            <button class="button button-outline" id="forecastButton" type="button">Get risk forecast</button>
+            <button class="button button-outline" id="saveCheckinButton" type="button">Save check-in</button>
+          </div>
+          <p class="api-message" id="forecastResult" aria-live="polite"></p>
+          <p class="api-message" id="checkinApiResult" aria-live="polite"></p>
+          <button class="sample-link" id="sampleButton" type="button">Give me an example instead</button>
+        </form>
+
+        <div class="result-card" id="planResult" aria-live="polite">
+          <div class="result-topline">
+            <span class="result-kicker">YOUR NEXT TINY MOVE</span>
+            <span class="result-spark">✳</span>
+          </div>
+
+          <div class="empty-result" id="emptyResult">
+            <div class="empty-illustration" aria-hidden="true">🪴</div>
+            <h3>Your next step is waiting.</h3>
+            <p>Pick a barrier, enter your task, and we'll find a small place to begin.</p>
+            <span class="handwritten">tiny is mighty ♡</span>
+          </div>
+
+          <div class="plan-output hidden" id="planOutput">
+            <span class="strategy-tag" id="strategyTag">SMALL-STEP STRATEGY</span>
+            <h3 id="resultTask">Your task</h3>
+            <p class="why-text" id="resultReason"></p>
+
+            <div class="first-step-box">
+              <span class="box-label">START HERE</span>
+              <p id="resultStep"></p>
+              <span class="step-time" id="resultTime"></span>
+            </div>
+
+            <div class="if-then-box">
+              <span class="box-label">YOUR IF–THEN PLAN</span>
+              <p id="ifThenPlan"></p>
+            </div>
+
+            <p class="evidence-note" id="evidenceNote"></p>
+
+            <div class="result-actions">
+              <button class="button button-primary" id="startFocus" type="button">
+                Start my timer <span aria-hidden="true">▶</span>
+              </button>
+              <button class="button button-outline" id="newStrategy" type="button">Try another</button>
+            </div>
+
+            <button class="text-button" id="markStarted" type="button">
+              I already started this step ✓
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section timer-section" id="focus">
+      <div class="timer-card">
+        <div class="timer-copy">
+          <span class="eyebrow">A LITTLE DATE WITH YOUR TASK</span>
+          <h2>Five minutes.<br /><em>That's the whole deal.</em></h2>
+          <p>
+            You don't need to finish everything. Just give your next step five minutes
+            of your attention.
+          </p>
+          <div class="timer-microcopy">You can stop after five minutes. No guilt. No streak lost.</div>
+        </div>
+
+        <div class="timer-widget">
+          <div class="timer-ring" id="timerRing">
+            <div class="timer-inner">
+              <span class="timer-label">JUST BEGIN</span>
+              <span class="timer-display" id="timer" role="timer" aria-live="off">05:00</span>
+              <span class="timer-status" id="timerStatus">Ready when you are</span>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button class="button button-primary" id="timerToggle" type="button">Start focus</button>
+            <button class="button button-outline" id="timerReset" type="button">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section deadline-section" id="deadline">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">A GENTLE HEADS-UP</span>
+          <h2>Your deadline <em>radar.</em></h2>
+          <p class="section-description">
+            Add upcoming tasks to see which ones may need attention first.
+          </p>
+        </div>
+        <span class="radar-icon" aria-hidden="true">◉</span>
+      </div>
+
+      <div class="deadline-layout">
+        <form class="deadline-form paper-card" id="deadlineForm">
+          <h3>Put it on the radar</h3>
+          <label for="radarTask">Task name</label>
+          <input id="radarTask" type="text" maxlength="160" placeholder="e.g. Submit project report" required />
+
+          <label for="radarDate">Deadline</label>
+          <input id="radarDate" type="date" required />
+
+          <label for="radarEffort">Estimated work remaining</label>
+          <select id="radarEffort">
+            <option value="15">15 minutes</option>
+            <option value="60" selected>About an hour</option>
+            <option value="180">About 3 hours</option>
+            <option value="480">A full workday</option>
+          </select>
+
+          <button class="button button-primary button-full" type="submit">Add to radar +</button>
+          <p class="form-footnote">Your entries are stored in this browser on this device.</p>
+        </form>
+
+        <div class="radar-list-panel">
+          <div class="radar-list-heading">
+            <h3>On your radar</h3>
+            <span id="radarCount">0 tasks</span>
+          </div>
+          <div id="radarList" class="radar-list" aria-live="polite">
+            <div class="radar-empty">
+              <span aria-hidden="true">☁</span>
+              <p>No tasks on the radar yet.</p>
+              <span>Adding a deadline can make the next move clearer.</span>
+            </div>
+          </div>
+          <p class="inline-note">
+            Attention labels use deadline and effort rules only. They are not ML predictions or probabilities.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section journal-section" id="journal">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">PROGRESS LOOKS DIFFERENT EVERY DAY</span>
+          <h2>Your tiny-win <em>journal.</em></h2>
+          <p class="section-description">
+            We're interested in what helps you start, not how perfectly you perform.
+          </p>
+        </div>
+        <span class="journal-sticker">PROUD OF YOU ♡</span>
+      </div>
+
+      <div class="journal-summary">
+        <div class="summary-stat">
+          <span class="stat-number" id="winCount">0</span>
+          <span class="stat-label">tiny starts logged</span>
+        </div>
+        <div class="summary-copy">
+          <h3>Every start counts as data.</h3>
+          <p>
+            Your notes can help you notice patterns over time. We won't claim a strategy
+            works better for you until you've collected enough observations.
+          </p>
+        </div>
+      </div>
+
+      <form class="win-form paper-card" id="winForm">
+        <label for="winNote">What did you do, even if it was small?</label>
+        <input
+          id="winNote"
+          type="text"
+          maxlength="240"
+          placeholder="e.g. Opened my notebook and solved one question"
+          required
+        />
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="winStrategy">Strategy you tried</label>
+            <select id="winStrategy">
+              <option value="tiny_step">Breaking it into a tiny step</option>
+              <option value="if_then">An if–then plan</option>
+              <option value="imperfect_start">An imperfect first draft</option>
+              <option value="distraction_reset">Removing distractions</option>
+              <option value="energy_match">Matching the task to my energy</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="winOutcome">Did it help you start?</label>
+            <select id="winOutcome">
+              <option value="yes">Yes, I started</option>
+              <option value="partial">A little</option>
+              <option value="no">Not this time</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="button button-primary" type="submit">Log this moment +</button>
+      </form>
+
+      <div class="wins-heading">
+        <h3>Little things worth remembering</h3>
+        <span class="handwritten">no win is too small</span>
+      </div>
+      <div class="wins-grid" id="winsGrid">
+        <div class="wins-empty">Your first little win can go here. It doesn't have to be impressive.</div>
+      </div>
+
+      <div class="pattern-card" id="patternCard">
+        <span class="pattern-icon" aria-hidden="true">✿</span>
+        <div>
+          <span class="eyebrow">YOUR PERSONAL PATTERNS</span>
+          <h3 id="patternTitle">We're still getting to know your habits.</h3>
+          <p id="patternDescription">
+            Log a few attempts and their outcomes. We'll summarize your observations when there's enough information to say something useful.
+          </p>
+        </div>
+      </div>
+
+      <div class="api-tools">
+        <div class="api-tool">
+          <h3>Record a plan outcome</h3>
+          <p class="form-footnote">Save a plan first, then record whether its planned work happened.</p>
+          <form id="outcomeForm">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="outcomeDate">Check-in date</label>
+                <input id="outcomeDate" type="date" required />
+              </div>
+              <div class="form-field">
+                <label for="outcomeCompleted">Did the planned work happen?</label>
+                <select id="outcomeCompleted">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+            <button class="button button-primary" type="submit">Save outcome</button>
+            <p class="api-message" id="outcomeApiResult" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="api-tool">
+          <h3>History from your check-ins</h3>
+          <button class="button button-outline" id="historyButton" type="button">Load history</button>
+          <div id="historyResult" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section science-section" id="science">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">NOT JUST VIBES. ACTUAL RESEARCH.</span>
+          <h2>The science behind <em>tiny steps.</em></h2>
+          <p class="section-description">
+            Slothcast borrows ideas from procrastination and goal-setting research.
+            These strategies are evidence-informed, not guaranteed treatments.
+          </p>
+        </div>
+        <span class="science-doodle" aria-hidden="true">✳</span>
+      </div>
+
+      <div class="science-grid">
+        <article class="science-card science-peach">
+          <div class="science-card-top"><span>01 / EMOTIONS</span><span aria-hidden="true">♡</span></div>
+          <div class="science-illustration" aria-hidden="true">☁ → ☀</div>
+          <h3>Make the task feel less awful.</h3>
+          <p>
+            Procrastination can offer short-term emotional relief. Noticing the barrier
+            can help you choose a more manageable way to begin.
+          </p>
+          <a
+            href="https://doi.org/10.1111/spc3.12011"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Sirois &amp; Pychyl (2013) ↗</a>
+          <span class="science-citation">Procrastination and emotion regulation</span>
+        </article>
+
+        <article class="science-card science-sage">
+          <div class="science-card-top"><span>02 / IF–THEN PLANS</span><span aria-hidden="true">✎</span></div>
+          <div class="science-illustration" aria-hidden="true">IF ✳ THEN →</div>
+          <h3>Give your intention a trigger.</h3>
+          <p>
+            An if–then plan links a specific situation to an action, making it easier
+            to translate intentions into behavior.
+          </p>
+          <a
+            href="https://doi.org/10.1016/S0065-2601(06)38002-1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Gollwitzer &amp; Sheeran (2006) ↗</a>
+          <span class="science-citation">Implementation intentions meta-analysis</span>
+        </article>
+
+        <article class="science-card science-lilac">
+          <div class="science-card-top"><span>03 / INTERVENTIONS</span><span aria-hidden="true">✿</span></div>
+          <div class="science-illustration" aria-hidden="true">little by little</div>
+          <h3>Find an approach that fits.</h3>
+          <p>
+            Reviews of procrastination interventions support studying practical
+            approaches while recognizing that effects vary across people and studies.
+          </p>
+          <a
+            href="https://doi.org/10.1007/s10648-023-09838-x"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Turner &amp; Hodis (2023) ↗</a>
+          <span class="science-citation">Systematic review of academic interventions</span>
+        </article>
+      </div>
+
+      <div class="science-disclaimer">
+        <span aria-hidden="true">ⓘ</span>
+        <p>
+          Slothcast is a self-help and task-planning prototype, not a diagnostic tool
+          or a replacement for professional care. Research findings do not guarantee
+          that a particular strategy will work for every person.
+        </p>
+      </div>
+    </section>
+
+    <section class="closing-card">
+      <span class="closing-star" aria-hidden="true">✳</span>
+      <p class="eyebrow">A NOTE FROM YOUR INNER SLOTH</p>
+      <h2>You can start small.<br /><em>You can start messy.</em></h2>
+      <p>You can start before you feel ready.</p>
+      <a class="button button-light" href="#checkin">Let's try again ♡</a>
+      <div class="closing-sloth" aria-hidden="true">🦥</div>
+    </section>
+
+    <footer class="footer">
+      <a class="brand footer-brand" href="#home"><span class="brand-icon">◡̈</span><span>slothcast<span class="brand-dot">.</span></span></a>
+      <p>Built for humans, not productivity robots.</p>
+      <a href="#science">Research &amp; limitations</a>
+      <span>© <span id="year"></span> Slothcast</span>
+    </footer>
+  </main>
+
+  <button class="floating-help" id="openHelp" type="button" aria-controls="helpPanel" aria-expanded="false">
+    <span class="help-icon" aria-hidden="true">✳</span>
+    <span>Need a little help?</span>
+  </button>
+
+  <section class="help-panel hidden" id="helpPanel" aria-label="Slothcast helper">
+    <div class="help-header">
+      <div class="help-avatar">🦥</div>
+      <div>
+        <h2>your tiny-step buddy</h2>
+        <p>Let's find a place to begin.</p>
+      </div>
+      <button class="icon-button" id="closeHelp" type="button" aria-label="Close helper">×</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages" aria-live="polite">
+      <div class="chat-bubble bot-message">
+        Hey, you're not behind with me. What's the one thing on your mind right now?
+      </div>
+    </div>
+
+    <div class="chat-quick-actions">
+      <button type="button" data-chat-prompt="Help me break down a big task.">Break it down</button>
+      <button type="button" data-chat-prompt="I feel overwhelmed. Help me start gently.">I'm overwhelmed</button>
+      <button type="button" data-chat-prompt="Help me make an if-then plan.">Make an if–then plan</button>
+    </div>
+
+    <form id="chatForm" class="chat-form">
+      <input id="chatInput" type="text" maxlength="500" placeholder="Tell me what's going on..." autocomplete="off" required />
+      <button type="submit" aria-label="Send message">➤</button>
+    </form>
+
+    <div class="voice-controls">
+      <button class="voice-button" id="voiceInput" type="button">🎙 Voice input</button>
+      <button class="voice-button" id="voiceOutput" type="button" aria-pressed="false">🔈 Voice replies off</button>
+    </div>
+    <p class="voice-note" id="voiceNote">Voice input depends on browser support and permission.</p>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
