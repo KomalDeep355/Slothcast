@@ -322,6 +322,31 @@
           </div>
         </div>
       </div>
+
+      <section class="habit-card" id="voiceTaskPlanner">
+        <p class="eyebrow">PLAN WITHOUT TYPING</p>
+        <h3>Say everything on your mind</h3>
+        <p>Dictate several tasks naturally. Review the transcription before using it.</p>
+
+        <div class="voice-actions">
+          <button type="button" id="startVoiceTasks">🎙 Start dictation</button>
+          <button type="button" id="stopVoiceTasks" disabled>Stop</button>
+        </div>
+
+        <label for="voiceTaskText">Your dictated tasks</label>
+        <textarea
+          id="voiceTaskText"
+          rows="5"
+          placeholder="Finish the project report, revise for the exam, and email my mentor…"
+        ></textarea>
+
+        <button type="button" id="parseVoiceTasks">Split into tasks</button>
+        <div id="voiceTaskList" aria-live="polite"></div>
+        <p id="voiceStatus" role="status"></p>
+        <p class="form-footnote">
+          Speech recognition depends on your browser. Nothing is saved or sent to a forecast automatically.
+        </p>
+      </section>
     </section>
 
     <section class="section timer-section" id="focus">
@@ -514,6 +539,97 @@
           <div id="historyResult" aria-live="polite"></div>
         </div>
       </div>
+    </section>
+
+    <section class="habit-dashboard" id="habitDashboard">
+      <div class="habit-heading">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL PATTERNS</p>
+          <h2>Your habit forecast</h2>
+          <p id="habitStatus">Learning from your recorded check-ins…</p>
+        </div>
+        <button type="button" id="refreshHabitForecast">Refresh forecast</button>
+      </div>
+
+      <div class="habit-metrics">
+        <article class="habit-card">
+          <span>Completion rate</span>
+          <strong id="habitCompletion">—</strong>
+          <small>Across recorded tasks</small>
+        </article>
+        <article class="habit-card">
+          <span>Completed tasks</span>
+          <strong id="habitCompleted">—</strong>
+          <small id="habitTaskCount">Recorded outcomes</small>
+        </article>
+        <article class="habit-card">
+          <span>Postponed tasks</span>
+          <strong id="habitPostponed">—</strong>
+          <small>Recorded as incomplete</small>
+        </article>
+        <article class="habit-card">
+          <span>Recent change</span>
+          <strong id="habitChange">—</strong>
+          <small>Compared with the previous period</small>
+        </article>
+      </div>
+
+      <div class="habit-projections">
+        <article class="habit-card">
+          <p class="eyebrow">NEXT 7 DAYS</p>
+          <h3 id="forecast7Title">Building your forecast</h3>
+          <p id="forecast7Text">Record outcomes to see your outlook.</p>
+        </article>
+        <article class="habit-card">
+          <p class="eyebrow">NEXT 30 DAYS</p>
+          <h3 id="forecast30Title">Building your forecast</h3>
+          <p id="forecast30Text">Long-range estimates have more uncertainty.</p>
+        </article>
+      </div>
+
+      <div class="habit-card">
+        <h3>What your habits are telling you</h3>
+        <div id="habitInsights" aria-live="polite">
+          Your insights will appear here.
+        </div>
+      </div>
+
+      <div class="habit-card">
+        <h3>Patterns worth noticing</h3>
+        <div class="habit-pattern-columns">
+          <div>
+            <h4>By weekday</h4>
+            <div id="weekdayPatterns"></div>
+          </div>
+          <div>
+            <h4>By energy level</h4>
+            <div id="energyPatterns"></div>
+          </div>
+          <div>
+            <h4>By planned duration</h4>
+            <div id="durationPatterns"></div>
+          </div>
+          <div>
+            <h4>By deadline</h4>
+            <div id="deadlinePatterns"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="habit-card">
+        <h3>Recently postponed</h3>
+        <div id="postponedTasks"></div>
+      </div>
+
+      <section class="habit-card" id="habitCoach">
+        <h3>Your next small win</h3>
+        <p>Turn your patterns into a manageable plan.</p>
+        <p class="form-footnote">
+          When configured, coaching sends aggregated check-in statistics—not task names—to your selected provider.
+        </p>
+        <button type="button" id="loadHabitCoach">Get my coaching plan</button>
+        <div id="habitCoachText" aria-live="polite"></div>
+      </section>
     </section>
 
     <section class="section science-section" id="science">

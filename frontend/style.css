@@ -2496,3 +2496,54 @@ input[type="range"] {
     transition-duration: 0.01ms !important;
   }
 }
+
+.voice-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+#voiceTaskPlanner {
+  margin-top: 20px;
+}
+
+#voiceTaskPlanner textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0 14px;
+  padding: 14px;
+  border: 1px solid rgba(90, 75, 65, 0.2);
+  border-radius: 14px;
+  font: inherit;
+  resize: vertical;
+}
+
+#voiceTaskList {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.voice-task-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(90, 75, 65, 0.12);
+  border-radius: 12px;
+}
+
+.voice-task-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(90, 75, 65, 0.16);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.voice-task-row button {
+  flex-shrink: 0;
+}

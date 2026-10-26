@@ -1,6 +1,6 @@
 "use strict";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE_URL = "";
 const STORAGE_KEY = "slothcast-prototype-v2";
 const FOCUS_DURATION = 5 * 60;
 
@@ -8,7 +8,7 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
 async function apiRequest(path, options = {}) {
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -1444,3 +1444,382 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+const habitForecastUrl = "/api/habits/forecast";
+
+function habitElement(id) {
+  return document.getElementById(id);
+}
+
+function setHabitText(id, value) {
+  const element = habitElement(id);
+  if (element) element.textContent = value;
+}
+
+function formatHabitPercent(value) {
+  return value === null || value === undefined ? "—" : `${value}%`;
+}
+
+function renderHabitPatterns(targetId, patterns) {
+  const container = habitElement(targetId);
+  if (!container) return;
+
+  container.replaceChildren();
+
+  if (!patterns || patterns.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "habit-empty";
+    empty.textContent = "Not enough recorded data yet.";
+    container.appendChild(empty);
+    return;
+  }
+
+  patterns.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "habit-pattern-row";
+
+    const name = document.createElement("span");
+    name.textContent = item.group;
+
+    const value = document.createElement("strong");
+    value.textContent = `${formatHabitPercent(item.completion_rate_pct)} · ${item.observations}`;
+
+    row.append(name, value);
+    container.appendChild(row);
+  });
+}
+
+function renderHabitInsights(insights) {
+  const container = habitElement("habitInsights");
+  if (!container) return;
+
+  container.replaceChildren();
+
+  if (!insights || insights.length === 0) {
+    container.textContent = "Record task outcomes to unlock insights.";
+    return;
+  }
+
+  insights.forEach((item) => {
+    const article = document.createElement("article");
+    article.className = "habit-insight";
+
+    const title = document.createElement("strong");
+    title.textContent = item.title;
+
+    const detail = document.createElement("p");
+    detail.textContent = item.detail;
+
+    article.append(title, detail);
+    container.appendChild(article);
+  });
+}
+
+function renderPostponedTasks(tasks) {
+  const container = habitElement("postponedTasks");
+  if (!container) return;
+
+  container.replaceChildren();
+
+  if (!tasks || tasks.length === 0) {
+    container.textContent = "No recorded postponed tasks to show.";
+    return;
+  }
+
+  tasks.forEach((task) => {
+    const article = document.createElement("article");
+    article.className = "postponed-task";
+
+    const title = document.createElement("strong");
+    title.textContent = task.task;
+
+    const detail = document.createElement("p");
+    const parts = [task.date];
+
+    if (task.planned_minutes !== null && task.planned_minutes !== undefined) {
+      parts.push(`${task.planned_minutes} planned minutes`);
+    }
+
+    if (task.energy !== null && task.energy !== undefined) {
+      parts.push(`energy ${task.energy}/5`);
+    }
+
+    detail.textContent = parts.join(" · ");
+    article.append(title, detail);
+    container.appendChild(article);
+  });
+}
+
+function renderHabitForecast(data) {
+  const summary = data.summary || {};
+  const seven = data.forecasts?.next_7_days || {};
+  const thirty = data.forecasts?.next_30_days || {};
+
+  setHabitText(
+    "habitCompletion",
+    formatHabitPercent(summary.overall_completion_rate_pct)
+  );
+  setHabitText("habitCompleted", summary.completed_tasks ?? 0);
+  setHabitText("habitPostponed", summary.postponed_tasks ?? 0);
+  setHabitText(
+    "habitTaskCount",
+    `${summary.labelled_tasks ?? 0} labelled outcomes`
+  );
+
+  const change = summary.change_vs_previous_period_percentage_points;
+  setHabitText(
+    "habitChange",
+    change === null || change === undefined
+      ? "Not enough data"
+      : `${change > 0 ? "+" : ""}${change} pp`
+  );
+
+  if (seven.expected_completion_rate_pct === undefined) {
+    setHabitText("forecast7Title", "Not enough personal data");
+    setHabitText("forecast7Text", seven.message || "Record more task outcomes.");
+  } else {
+    setHabitText(
+      "forecast7Title",
+      `${formatHabitPercent(seven.expected_completion_rate_pct)} expected completion`
+    );
+    setHabitText(
+      "forecast7Text",
+      `About ${seven.expected_completed} completed and ${seven.expected_postponed} postponed tasks, based on historical task volume. Uncertainty: ${seven.uncertainty}.`
+    );
+  }
+
+  if (thirty.expected_completion_rate_pct === undefined) {
+    setHabitText("forecast30Title", "Not enough personal data");
+    setHabitText("forecast30Text", thirty.message || "Record more task outcomes.");
+  } else {
+    setHabitText(
+      "forecast30Title",
+      `${formatHabitPercent(thirty.expected_completion_rate_pct)} expected completion`
+    );
+    setHabitText(
+      "forecast30Text",
+      `About ${thirty.expected_completed} completed and ${thirty.expected_postponed} postponed tasks. This is a longer-range estimate with greater uncertainty.`
+    );
+  }
+
+  const status = habitElement("habitStatus");
+  if (status) {
+    status.textContent = data.personalized
+      ? `Using ${summary.labelled_tasks} recorded task outcomes.`
+      : `Personal patterns are still forming: ${summary.labelled_tasks} labelled outcomes so far.`;
+  }
+
+  renderHabitInsights(data.insights);
+  renderHabitPatterns("weekdayPatterns", data.patterns?.by_weekday);
+  renderHabitPatterns("energyPatterns", data.patterns?.by_energy);
+  renderHabitPatterns("durationPatterns", data.patterns?.by_planned_duration);
+  renderHabitPatterns("deadlinePatterns", data.patterns?.by_deadline_proximity);
+  renderPostponedTasks(data.recent_postponed_tasks);
+}
+
+async function loadHabitForecast() {
+  setHabitText("habitStatus", "Updating your habit forecast…");
+
+  try {
+    const response = await fetch(habitForecastUrl);
+
+    if (!response.ok) {
+      throw new Error(`Forecast request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    renderHabitForecast(data);
+  } catch (error) {
+    setHabitText(
+      "habitStatus",
+      "Could not load the habit forecast. Check that FastAPI is running."
+    );
+    console.error(error);
+  }
+}
+
+const refreshHabitButton = habitElement("refreshHabitForecast");
+if (refreshHabitButton) {
+  refreshHabitButton.addEventListener("click", loadHabitForecast);
+}
+
+loadHabitForecast();
+
+function setupVoiceTaskPlanner() {
+  const voiceText = document.getElementById("voiceTaskText");
+  const voiceStart = document.getElementById("startVoiceTasks");
+  const voiceStop = document.getElementById("stopVoiceTasks");
+  const voiceParse = document.getElementById("parseVoiceTasks");
+  const voiceList = document.getElementById("voiceTaskList");
+  const voiceStatus = document.getElementById("voiceStatus");
+
+  if (!voiceStart || !voiceText || !voiceList || !voiceParse || !voiceStop) {
+    return;
+  }
+
+  let voiceRecognition = null;
+  let voiceFinalTranscript = "";
+
+  function setVoiceStatus(message) {
+    if (voiceStatus) voiceStatus.textContent = message;
+  }
+
+  function splitDictatedTasks(text) {
+    return text
+      .replace(/\r/g, "\n")
+      .split(/\n|[,;]|\b(?:and then|next task|another task is)\b/gi)
+      .map((task) => task
+        .replace(/^[\s.:-]+/, "")
+        .replace(/^(?:and|then|also)\s+/i, "")
+        .replace(/[\s.]+$/g, ""))
+      .filter(Boolean)
+      .filter((task) => !/^(and|then|also|next)$/i.test(task));
+  }
+
+  function renderDictatedTasks(tasks) {
+    voiceList.replaceChildren();
+
+    if (!tasks.length) {
+      setVoiceStatus("No tasks found yet. Dictate or type a few tasks first.");
+      return;
+    }
+
+    function updateTaskCount() {
+      const remaining = voiceList.querySelectorAll(".voice-task-row").length;
+      setVoiceStatus(
+        remaining
+          ? `${remaining} tasks detected. Edit or remove any item before proceeding.`
+          : "All detected tasks were removed."
+      );
+    }
+
+    tasks.forEach((task, index) => {
+      const row = document.createElement("div");
+      row.className = "voice-task-row";
+
+      const number = document.createElement("span");
+      number.textContent = `${index + 1}.`;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = task;
+      input.setAttribute("aria-label", `Task ${index + 1}`);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => {
+        row.remove();
+        updateTaskCount();
+      });
+
+      row.append(number, input, remove);
+      voiceList.appendChild(row);
+    });
+
+    updateTaskCount();
+  }
+
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    voiceStart.disabled = true;
+    setVoiceStatus(
+      "Speech recognition is not supported in this browser. You can still type or paste tasks."
+    );
+  } else {
+    voiceRecognition = new SpeechRecognition();
+    voiceRecognition.continuous = true;
+    voiceRecognition.interimResults = true;
+    voiceRecognition.lang = navigator.language || "en-IN";
+
+    voiceRecognition.onstart = () => {
+      voiceStart.disabled = true;
+      voiceStop.disabled = false;
+      setVoiceStatus("Listening. Speak naturally and separate tasks with pauses.");
+    };
+
+    voiceRecognition.onresult = (event) => {
+      let interim = "";
+
+      for (let index = event.resultIndex; index < event.results.length; index++) {
+        const result = event.results[index];
+        const transcript = result[0].transcript.trim();
+
+        if (result.isFinal && transcript) {
+          voiceFinalTranscript += `${transcript} `;
+        } else {
+          interim += `${transcript} `;
+        }
+      }
+
+      voiceText.value = `${voiceFinalTranscript}${interim}`.trim();
+    };
+
+    voiceRecognition.onerror = (event) => {
+      setVoiceStatus(
+        `Voice recognition stopped: ${event.error}. You can edit the text manually.`
+      );
+    };
+
+    voiceRecognition.onend = () => {
+      voiceStart.disabled = false;
+      voiceStop.disabled = true;
+      voiceFinalTranscript = voiceText.value.trim();
+    };
+
+    voiceStart.addEventListener("click", () => {
+      voiceFinalTranscript = voiceText.value.trim();
+      if (voiceFinalTranscript) voiceFinalTranscript += " ";
+
+      try {
+        voiceRecognition.start();
+      } catch (error) {
+        setVoiceStatus(
+          "Voice recognition is already starting. Please try again shortly."
+        );
+        console.warn("Could not start task dictation.", error);
+      }
+    });
+
+    voiceStop.addEventListener("click", () => {
+      voiceRecognition.stop();
+    });
+  }
+
+  voiceParse.addEventListener("click", () => {
+    renderDictatedTasks(splitDictatedTasks(voiceText.value));
+  });
+}
+
+function setupHabitCoach() {
+  const coachButton = document.getElementById("loadHabitCoach");
+  const coachText = document.getElementById("habitCoachText");
+  if (!coachButton || !coachText) return;
+
+  coachButton.addEventListener("click", async () => {
+    coachButton.disabled = true;
+    coachText.textContent = "Preparing your coaching plan…";
+
+    try {
+      const response = await fetch("/api/habits/coach");
+      const result = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(result?.detail || `Coaching request failed: ${response.status}`);
+      }
+
+      coachText.textContent =
+        result.coaching || result.message || "No coaching response available.";
+    } catch (error) {
+      coachText.textContent =
+        "Coaching is unavailable right now. Your numerical forecast is still available.";
+      console.error("Could not load habit coaching.", error);
+    } finally {
+      coachButton.disabled = false;
+    }
+  });
+}
+
+setupVoiceTaskPlanner();
+setupHabitCoach();
